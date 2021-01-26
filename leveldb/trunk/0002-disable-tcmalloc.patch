@@ -1,0 +1,21 @@
+diff -u a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2019-05-03 22:24:26.000000000 +0200
++++ b/CMakeLists.txt	2021-01-25 12:57:09.809118895 +0100
+@@ -37,7 +37,6 @@
+ include(CheckLibraryExists)
+ check_library_exists(crc32c crc32c_value "" HAVE_CRC32C)
+ check_library_exists(snappy snappy_compress "" HAVE_SNAPPY)
+-check_library_exists(tcmalloc malloc "" HAVE_TCMALLOC)
+ 
+ include(CheckCXXSymbolExists)
+ # Using check_cxx_symbol_exists() instead of check_c_symbol_exists() because
+@@ -251,9 +250,6 @@
+ if(HAVE_SNAPPY)
+   target_link_libraries(leveldb snappy)
+ endif(HAVE_SNAPPY)
+-if(HAVE_TCMALLOC)
+-  target_link_libraries(leveldb tcmalloc)
+-endif(HAVE_TCMALLOC)
+ 
+ # Needed by port_stdcxx.h
+ find_package(Threads REQUIRED)

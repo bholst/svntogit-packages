@@ -3,18 +3,24 @@
 
 pkgname=leveldb
 pkgver=1.22
-pkgrel=2
+pkgrel=3
 pkgdesc="A fast and lightweight key/value database library"
 arch=('x86_64')
 url="https://github.com/google/leveldb"
 license=('BSD')
-depends=('gperftools' 'snappy')
+depends=('snappy')
 makedepends=('cmake')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/google/leveldb/archive/$pkgver.tar.gz")
-sha1sums=('8d310af5cfb53dc836bfb412ff4b3c8aea578627')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/google/leveldb/archive/$pkgver.tar.gz" "0002-disable-tcmalloc.patch")
+sha1sums=('8d310af5cfb53dc836bfb412ff4b3c8aea578627'
+          '0eeaa7a2b3891c64835b0b269c8d1036e948f434')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+  patch --forward --strip=1 --input="${srcdir}/0002-disable-tcmalloc.patch"
+}
 
 build() {
-  mkdir "$pkgname-$pkgver/build"
+  mkdir -p "$pkgname-$pkgver/build"
   cd "$pkgname-$pkgver/build"
 
   cmake \
